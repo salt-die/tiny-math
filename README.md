@@ -3,6 +3,7 @@ A place for tiny math projects!
 
 
 * dragon_curve.py makes dragon curves with numpy
+![dragon curve image](dragon_curve.png)
 
 * game_of_life.py is Conway's Game of Life, but with scipy convolutions -- displays in terminal
 
