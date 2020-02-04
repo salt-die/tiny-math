@@ -8,6 +8,7 @@ A place for tiny math projects!
 * game_of_life.py is Conway's Game of Life, but with scipy convolutions -- displays in terminal
 
 * game_of_life_averages.py is the game of life, but new cells are the average color of their parents
+![game_of_life visualization](game_of_life_averages.png)
 
 * modular_arithmetic_on_circle illustrates some nice patterns from connecting points on a circle
 
