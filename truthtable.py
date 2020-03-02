@@ -111,17 +111,15 @@ def evaluate(expression, vars_values):
     expression[:3] = [int(op(p, q))]
     return evaluate(expression, vars_values)
 
-def table_maker(headers, *rows):
+def table_maker(*rows):
     """Generates an aligned table. https://github.com/salt-die/Table-Maker"""
     rows = list(rows)
-    rows.insert(0, headers)
 
     # Pad the length of items in each column
-    table = zip(*rows)
-    for i, column in enumerate(table):
-        max_length = max(map(len, column))
-        for j, item in enumerate(column):
-            rows[j][i] = f'{item:^{max_length}}'
+    lengths = list(map(len, rows[0]))
+    for i, row in enumerate(rows):
+        for j, (item, length) in enumerate(zip(row, lengths)):
+            rows[i][j] = f'{item:^{length}}'
 
     # Construct table
     table = [f'│ {" │ ".join(row)} │' for row in rows]
