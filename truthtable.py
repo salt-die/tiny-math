@@ -133,12 +133,31 @@ def table_maker(*rows):
 
 class TruthTable:
     def __init__(self, *props):
-        self.props = list(props)
-        self.expressions = [reformat(prop) for prop in props]
-        self.vars = sorted(reduce(set.union, map(find_vars, self.expressions)))
-        self._make_table()
+        self._props = list(props)
+        self._update_attributes()
 
-    def _make_table(self):
+    @property
+    def props(self):
+        return self._props
+
+    @props.setter
+    def props(self, new_props):
+        self._props = list(new_props)
+        self._update_attributes()
+
+    def add_prop(self, prop):
+        self._props.append(prop)
+        self._update_attributes()
+
+    def pop(self, i):
+        prop = self._props.pop(i)
+        self._update_attributes
+        return prop
+
+    def _update_attributes(self):
+        self.expressions = [reformat(prop) for prop in self.props]
+        self.vars = sorted(reduce(set.union, map(find_vars, self.expressions)))
+
         rows = generate(len(self.vars))
 
         self.table = []
