@@ -151,7 +151,7 @@ class TruthTable:
 
     def pop(self, i):
         prop = self._props.pop(i)
-        self._update_attributes
+        self._update_attributes()
         return prop
 
     def _update_attributes(self):
