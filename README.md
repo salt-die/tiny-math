@@ -23,3 +23,5 @@ A place for tiny math projects!
 * pendulums.py demonstrates pendulum "waves" that appear when pendulums have different lengths
 
 ![pendulum wave visualization](pendulum.gif)
+
+*truthtable.py generates truth tables from boolean expressions
