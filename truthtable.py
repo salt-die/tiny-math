@@ -76,7 +76,7 @@ def is_var(token):
     return token not in {'and', 'or', '->', '<->', '-', '(', ')'}
 
 def find_vars(expression):
-    """Return a list of variables in the expression."""
+    """Return a set of variables in the expression."""
     return set(filter(is_var, expression))
 
 def evaluate(expression, vars_values):
@@ -97,7 +97,7 @@ def evaluate(expression, vars_values):
     if '-' in expression:
         negate_index = expression.index('-')
         var = expression[negate_index + 1]
-        var = int(vars_values.get(var, var))
+        var = vars_values.get(var, var)
         expression[negate_index: negate_index + 2] = [int(not var)]
         return evaluate(expression, vars_values)
 
@@ -107,7 +107,7 @@ def evaluate(expression, vars_values):
                  '<->': lambda a, b: a == b}
 
     p, op, q = expression[:3]
-    p, op, q = int(vars_values.get(p, p)), func_dict[op], int(vars_values.get(q, q))
+    p, op, q = vars_values.get(p, p), func_dict[op], vars_values.get(q, q)
     expression[:3] = [int(op(p, q))]
     return evaluate(expression, vars_values)
 
