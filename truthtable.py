@@ -122,9 +122,10 @@ def table_maker(*rows):
             rows[i][j] = f'{item:^{length}}'
 
     # Construct table
+    horizontals = tuple("─" * (len(item) + 2) for item in rows[0])
+    top, title, bottom = (f'{l}{m.join(horizontals)}{r}' for l, m, r in ('┌┬┐','├┼┤','└┴┘'))
+
     table = [f'│ {" │ ".join(row)} │' for row in rows]
-    top, title, bottom = (f'{left}{mid.join("─" * (len(item) + 2) for item in rows[0])}{right}'
-                          for left, mid, right in ('┌┬┐','├┼┤','└┴┘'))
     table.insert(0, top)
     table.insert(2, title)
     table.append(bottom)
@@ -156,13 +157,14 @@ class TruthTable:
 
     def _update_attributes(self):
         expressions = [reformat(prop) for prop in self.props]
+
         self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
         rows = generate(len(self.vars))
 
         self.table = []
         for values in rows:
-            vars_values = {var:value for var, value in zip(self.vars, values)}
+            vars_values = dict(zip(self.vars, values))
             results = [evaluate(expression, vars_values) for expression in expressions]
             self.table.append(values + results)
 
