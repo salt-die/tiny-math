@@ -24,4 +24,4 @@ A place for tiny math projects!
 
 ![pendulum wave visualization](pendulum.gif)
 
-*truthtable.py generates truth tables from boolean expressions
+* truthtable.py generates truth tables from boolean expressions
