@@ -179,3 +179,15 @@ class TruthTable:
         if not isinstance(other, TruthTable):
             return False
         return self.vars == other.vars and self.table == other.table
+
+    def __add__(self, other):
+        if isinstance(other, str):
+            return TruthTable(*self.props, other)
+        return TruthTable(*self.props, *other.props)
+
+    def __iadd__(self, other):
+        if isinstance(other, str):
+            self.add_prop(other)
+        else:
+            self.props = self.props + other.props
+        return self
