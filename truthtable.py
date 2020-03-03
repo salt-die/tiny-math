@@ -149,21 +149,21 @@ class TruthTable:
         self._props.append(prop)
         self._update_attributes()
 
-    def pop(self, i):
-        prop = self._props.pop(i)
+    def pop(self, i=None):
+        prop = self._props.pop() if i is None else self._props.pop(i)
         self._update_attributes()
         return TruthTable(prop)
 
     def _update_attributes(self):
-        self.expressions = [reformat(prop) for prop in self.props]
-        self.vars = sorted(reduce(set.union, map(find_vars, self.expressions)))
+        expressions = [reformat(prop) for prop in self.props]
+        self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
         rows = generate(len(self.vars))
 
         self.table = []
         for values in rows:
             vars_values = {var:value for var, value in zip(self.vars, values)}
-            results = [evaluate(expression, vars_values) for expression in self.expressions]
+            results = [evaluate(expression, vars_values) for expression in expressions]
             self.table.append(values + results)
 
     def display(self, binary=False):
@@ -174,3 +174,8 @@ class TruthTable:
 
     def __repr__(self):
         return ' | '.join(self.props)
+
+    def __eq__(self, other):
+        if not isinstance(other, TruthTable):
+            return False
+        return self.vars == other.vars and self.table == other.table
