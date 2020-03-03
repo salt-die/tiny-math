@@ -152,7 +152,7 @@ class TruthTable:
     def pop(self, i):
         prop = self._props.pop(i)
         self._update_attributes()
-        return prop
+        return TruthTable(prop)
 
     def _update_attributes(self):
         self.expressions = [reformat(prop) for prop in self.props]
@@ -171,3 +171,6 @@ class TruthTable:
         table = [[translate[value] for value in row] for row in self.table]
         table = table_maker(self.vars + self.props, *table)
         print(table)
+
+    def __repr__(self):
+        return ' | '.join(self.props)
