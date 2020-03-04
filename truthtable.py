@@ -53,13 +53,9 @@ def generate(n):
     """Generate truth table values for n variables by iterating through binary numbers."""
     return [list(map(int, bin(i)[2:].zfill(n))) for i in range(2**n)]
 
-def is_var(token):
-    """Returns true if token is a variable."""
-    return token not in TOKENS
-
 def find_vars(expression):
     """Return a set of variables in the expression."""
-    return set(filter(is_var, expression))
+    return set(token for token in expression if token not in TOKENS)
 
 def evaluate(expression, vars_values):
     """Recursively evaluate expression starting with inner most parens."""
