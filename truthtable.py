@@ -36,11 +36,12 @@ Operator precendence is parens, negate, then left-to-right.
 """
 from functools import reduce
 
-OPERATORS = {'and', 'or', '->', '->', '~'}
-FUNC_DIC = {'and': lambda p, q: p and q,
-             'or': lambda p, q: p or q,
-             '->': lambda p, q: not p or q,
-            '<->': lambda p, q: p == q}
+OP_DICT = {'and': lambda p, q: p and q,
+            'or': lambda p, q: p or q,
+            '->': lambda p, q: not p or q,
+           '<->': lambda p, q: p == q}
+
+OPERATORS = set(OP_DIC).union('~')
 
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
@@ -82,7 +83,7 @@ def evaluate(expression, vars_values):
         return evaluate(expression, vars_values)
 
     p, op, q = expression[:3]
-    p, op, q = vars_values.get(p, p), FUNC_DICT[op], vars_values.get(q, q)
+    p, op, q = vars_values.get(p, p), OP_DICT[op], vars_values.get(q, q)
     expression[:3] = [int(op(p, q))]
     return evaluate(expression, vars_values)
 
