@@ -131,7 +131,7 @@ class TruthTable:
         self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
         self.table = []
-        for values in product((0, 1), repeat=n):
+        for values in product((0, 1), repeat=len(self.vars)):
             vars_values = dict(zip(self.vars, values))
             results = [evaluate(expression, vars_values) for expression in expressions]
             self.table.append(list(values) + results)
