@@ -152,9 +152,9 @@ class TruthTable:
         return ' | '.join(self.props)
 
     def __eq__(self, other):
-        if not isinstance(other, TruthTable):
-            return False
-        return self.vars == other.vars and self.table == other.table
+        return (isinstance(other, TruthTable)
+                and self.vars == other.vars
+                and self.table == other.table)
 
     def __add__(self, other):
         if isinstance(other, str):
