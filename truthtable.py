@@ -41,7 +41,7 @@ OP_DICT = {'and': lambda p, q: p and q,
             '->': lambda p, q: not p or q,
            '<->': lambda p, q: p == q}
 
-OPERATORS = set(OP_DIC).union('~')
+TOKENS = set(OP_DIC).union('~()')
 
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
@@ -54,7 +54,7 @@ def generate(n):
 
 def is_var(token):
     """Returns true if token is a variable."""
-    return token not in OPERATORS.union('()')
+    return token not in TOKENS
 
 def find_vars(expression):
     """Return a set of variables in the expression."""
