@@ -32,7 +32,7 @@ Example usage:
 │ 1 │ 1 │ 1 │            1            │      1       │   1    │
 └───┴───┴───┴─────────────────────────┴──────────────┴────────┘
 
-Operator precendence is parens, negate, then left-to-right.
+Operator precedence is parens, negate, then left-to-right.
 """
 from functools import reduce
 from itertools import filterfalse, product
