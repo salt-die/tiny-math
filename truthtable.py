@@ -31,8 +31,16 @@ Example usage:
 │ 1 │ 1 │ 0 │            0            │      0       │   1    │
 │ 1 │ 1 │ 1 │            1            │      1       │   1    │
 └───┴───┴───┴─────────────────────────┴──────────────┴────────┘
+
+Operator precendence is parens, negate, then left-to-right.
 """
 from functools import reduce
+
+OPERATORS = {'and', 'or', '->', '->', '~'}
+FUNC_DIC = {'and': lambda p, q: p and q,
+             'or': lambda p, q: p or q,
+             '->': lambda p, q: not p or q,
+            '<->': lambda p, q: p == q}
 
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
@@ -45,7 +53,7 @@ def generate(n):
 
 def is_var(token):
     """Returns true if token is a variable."""
-    return token not in {'and', 'or', '->', '<->', '~', '(', ')'}
+    return token not in OPERATORS.union('()')
 
 def find_vars(expression):
     """Return a set of variables in the expression."""
@@ -73,13 +81,8 @@ def evaluate(expression, vars_values):
         expression[negate_index: negate_index + 2] = [int(not var)]
         return evaluate(expression, vars_values)
 
-    func_dict = {'and': lambda p, q: p and q,
-                  'or': lambda p, q: p or q,
-                  '->': lambda p, q: not p or q,
-                 '<->': lambda p, q: p == q}
-
     p, op, q = expression[:3]
-    p, op, q = vars_values.get(p, p), func_dict[op], vars_values.get(q, q)
+    p, op, q = vars_values.get(p, p), FUNC_DICT[op], vars_values.get(q, q)
     expression[:3] = [int(op(p, q))]
     return evaluate(expression, vars_values)
 
