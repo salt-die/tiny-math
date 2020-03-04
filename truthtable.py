@@ -126,7 +126,7 @@ class TruthTable:
         return TruthTable(prop)
 
     def _update_attributes(self):
-        expressions = [reformat(prop) for prop in self.props]
+        expressions = tuple(map(reformat, self.props))
 
         self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
