@@ -50,10 +50,6 @@ def reformat(formula):
     formula = ''.join(f' {i} ' if i in '()~' else i for i in formula)
     return formula.split()
 
-def generate(n):
-    """Generate truth table values for n variables by iterating through binary numbers."""
-    return map(list, product((0, 1), repeat=n))
-
 def find_vars(expression):
     """Return a set of variables in the expression."""
     return set(filterfalse(TOKENS.__contains__, expression))
@@ -135,10 +131,10 @@ class TruthTable:
         self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
         self.table = []
-        for values in generate(len(self.vars)):
+        for values in product((0, 1), repeat=n):
             vars_values = dict(zip(self.vars, values))
             results = [evaluate(expression, vars_values) for expression in expressions]
-            self.table.append(values + results)
+            self.table.append(list(values) + results)
 
     def display(self, binary=False):
         translate = '01' if binary else 'FT'
