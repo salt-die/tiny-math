@@ -2,11 +2,11 @@
 Generate Truth Tables from boolean expressions.
 
 Example usage:
->>> tt = TruthTable('p and (-q or (p and r))', 'p or q and r', 'p -> q')
+>>> tt = TruthTable('p and (~q or (p and r))', 'p or q and r', 'p -> q')
 
 >>> tt.display()
 ┌───┬───┬───┬─────────────────────────┬──────────────┬────────┐
-│ p │ q │ r │ p and (-q or (p and r)) │ p or q and r │ p -> q │
+│ p │ q │ r │ p and (~q or (p and r)) │ p or q and r │ p -> q │
 ├───┼───┼───┼─────────────────────────┼──────────────┼────────┤
 │ F │ F │ F │            F            │      F       │   T    │
 │ F │ F │ T │            F            │      F       │   T    │
@@ -20,7 +20,7 @@ Example usage:
 
 >>> tt.display(binary=True)
 ┌───┬───┬───┬─────────────────────────┬──────────────┬────────┐
-│ p │ q │ r │ p and (-q or (p and r)) │ p or q and r │ p -> q │
+│ p │ q │ r │ p and (~q or (p and r)) │ p or q and r │ p -> q │
 ├───┼───┼───┼─────────────────────────┼──────────────┼────────┤
 │ 0 │ 0 │ 0 │            0            │      0       │   1    │
 │ 0 │ 0 │ 1 │            0            │      0       │   1    │
@@ -32,13 +32,11 @@ Example usage:
 │ 1 │ 1 │ 1 │            1            │      1       │   1    │
 └───┴───┴───┴─────────────────────────┴──────────────┴────────┘
 """
-from itertools import zip_longest
 from functools import reduce
 
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
-    formula = ''.join(f' {i} ' if i in '()' or (i == '-' and j != '>') else i
-                      for i, j in zip_longest(formula, formula[1:]))
+    formula = ''.join(f' {i} ' if i in '()~' else i for i in formula)
     return formula.split()
 
 def generate(n):
@@ -47,7 +45,7 @@ def generate(n):
 
 def is_var(token):
     """Returns true if token is a variable."""
-    return token not in {'and', 'or', '->', '<->', '-', '(', ')'}
+    return token not in {'and', 'or', '->', '<->', '~', '(', ')'}
 
 def find_vars(expression):
     """Return a set of variables in the expression."""
@@ -68,17 +66,17 @@ def evaluate(expression, vars_values):
         expression[first: last + 1] = [evaluate(expression[first + 1: last], vars_values)]
         return evaluate(expression, vars_values)
 
-    if '-' in expression:
-        negate_index = expression.index('-')
+    if '~' in expression:
+        negate_index = expression.index('~')
         var = expression[negate_index + 1]
         var = vars_values.get(var, var)
         expression[negate_index: negate_index + 2] = [int(not var)]
         return evaluate(expression, vars_values)
 
-    func_dict = {'and': lambda a, b: a and b,
-                  'or': lambda a, b: a or b,
-                  '->': lambda a, b: not a or b,
-                 '<->': lambda a, b: a == b}
+    func_dict = {'and': lambda p, q: p and q,
+                  'or': lambda p, q: p or q,
+                  '->': lambda p, q: not p or q,
+                 '<->': lambda p, q: p == q}
 
     p, op, q = expression[:3]
     p, op, q = vars_values.get(p, p), func_dict[op], vars_values.get(q, q)
@@ -97,7 +95,7 @@ def table_maker(*rows):
 
     # Construct table
     horizontals = tuple("─" * (len(item) + 2) for item in rows[0])
-    top, title, bottom = (f'{l}{m.join(horizontals)}{r}' for l, m, r in ('┌┬┐','├┼┤','└┴┘'))
+    top, title, bottom = (f'{l}{m.join(horizontals)}{r}' for l, m, r in ('┌┬┐', '├┼┤', '└┴┘'))
 
     table = [f'│ {" │ ".join(row)} │' for row in rows]
     table.insert(0, top)
