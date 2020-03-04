@@ -74,7 +74,7 @@ def evaluate(expression, vars_values):
         return evaluate(expression, vars_values)
 
     if '~' in expression:
-        negate_index = expression.index('~')
+        negate_index = len(expression) - expression[::-1].index('~') - 1 # Find last negate.
         var = expression[negate_index + 1]
         var = vars_values.get(var, var)
         expression[negate_index: negate_index + 2] = [int(not var)]
