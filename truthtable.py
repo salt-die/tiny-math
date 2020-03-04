@@ -35,7 +35,7 @@ Example usage:
 Operator precendence is parens, negate, then left-to-right.
 """
 from functools import reduce
-from itertools import filterfalse
+from itertools import filterfalse, product
 
 OP_DICT = {'and': lambda p, q: p and q,
             'or': lambda p, q: p or q,
@@ -52,7 +52,7 @@ def reformat(formula):
 
 def generate(n):
     """Generate truth table values for n variables by iterating through binary numbers."""
-    return [list(map(int, bin(i)[2:].zfill(n))) for i in range(2**n)]
+    return map(list, product((0, 1), repeat=n))
 
 def find_vars(expression):
     """Return a set of variables in the expression."""
@@ -134,10 +134,8 @@ class TruthTable:
 
         self.vars = sorted(reduce(set.union, map(find_vars, expressions)))
 
-        rows = generate(len(self.vars))
-
         self.table = []
-        for values in rows:
+        for values in generate(len(self.vars)):
             vars_values = dict(zip(self.vars, values))
             results = [evaluate(expression, vars_values) for expression in expressions]
             self.table.append(values + results)
