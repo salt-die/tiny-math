@@ -138,7 +138,7 @@ class TruthTable:
 
     def display(self, binary=False):
         translate = '01' if binary else 'FT'
-        table = [[translate[value] for value in row] for row in self.table]
+        table = [[translate[i] for i in row] for row in self.table]
         table = table_maker(self.vars + self.props, *table)
         print(table)
 
