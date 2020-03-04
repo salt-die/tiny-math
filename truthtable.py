@@ -35,6 +35,7 @@ Example usage:
 Operator precendence is parens, negate, then left-to-right.
 """
 from functools import reduce
+from itertools import filterfalse
 
 OP_DICT = {'and': lambda p, q: p and q,
             'or': lambda p, q: p or q,
@@ -55,7 +56,7 @@ def generate(n):
 
 def find_vars(expression):
     """Return a set of variables in the expression."""
-    return set(token for token in expression if token not in TOKENS)
+    return set(filterfalse(TOKENS.__contains__, expression))
 
 def evaluate(expression, vars_values):
     """Recursively evaluate expression starting with inner most parens."""
