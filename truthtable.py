@@ -39,9 +39,10 @@ from functools import reduce
 OP_DICT = {'and': lambda p, q: p and q,
             'or': lambda p, q: p or q,
             '->': lambda p, q: not p or q,
-           '<->': lambda p, q: p == q}
+           '<->': lambda p, q: p == q,
+           'xor': lambda p, q: (p and not q) or (not p and q)}
 
-TOKENS = set(OP_DIC).union('~()')
+TOKENS = set(OP_DICT).union('~()')
 
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
