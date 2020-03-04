@@ -84,17 +84,17 @@ def evaluate(expression, vars_values):
     return evaluate(expression, vars_values)
 
 def table_maker(*rows):
-    """Generates an aligned table. https://github.com/salt-die/Table-Maker"""
+    """Generates an aligned table. Modified from https://github.com/salt-die/Table-Maker"""
     rows = list(rows)
 
     # Pad the length of items in each column
-    lengths = list(map(len, rows[0]))
+    lengths = tuple(map(len, rows[0]))
     for i, row in enumerate(rows):
         for j, (item, length) in enumerate(zip(row, lengths)):
             rows[i][j] = f'{item:^{length}}'
 
-    # Construct table
-    horizontals = tuple("─" * (len(item) + 2) for item in rows[0])
+    # Make separators
+    horizontals = tuple("─" * (length + 2) for length in lengths)
     top, title, bottom = (f'{l}{m.join(horizontals)}{r}' for l, m, r in ('┌┬┐', '├┼┤', '└┴┘'))
 
     table = [f'│ {" │ ".join(row)} │' for row in rows]
