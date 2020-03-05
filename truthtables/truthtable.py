@@ -12,6 +12,7 @@ TRUE = TRUE()
 FALSE = FALSE()
 TOKENS = set(OP_DICT).union('~()')
 
+
 def reformat(formula):
     """Add spaces around each parens and negate and split the formula."""
     formula = ''.join(f' {i} ' if i in '~()' else i for i in formula)
@@ -22,7 +23,7 @@ def find_vars(expression):
     return set(filterfalse(TOKENS.__contains__, expression))
 
 def build_tree(expression):
-    """Recursively evaluate expression starting with inner most parens."""
+    """Recursively build a parse tree starting with inner most parens."""
     if len(expression) == 1: # Base
         p = expression[0]
         return p
@@ -46,6 +47,19 @@ def build_tree(expression):
     expression[:3] = [op(p, q)]
     return build_tree(expression)
 
+def expr_to_tree(expression):
+    """Generate a tree from a reformatted proposition."""
+    # Replace constants and variables with Const and Vars
+    for i, token in enumerate(expression):
+        if token == 'T':
+            expression[i] = TRUE
+        elif token == 'F':
+            expression[i] = FALSE
+        elif token not in TOKENS:
+            expression[i] = Var(token)
+
+    return build_tree(expression)
+
 def table_maker(*rows):
     """Generates an aligned table. Modified from https://github.com/salt-die/Table-Maker"""
     rows = list(rows)
@@ -67,18 +81,6 @@ def table_maker(*rows):
     table = '\n'.join(table)
     return table
 
-def expr_to_tree(expression):
-    """Generate a tree from a reformatted proposition."""
-    # Replace constants and variables with Const and Vars
-    for i, token in enumerate(expression):
-        if token == 'T':
-            expression[i] = TRUE
-        elif token == 'F':
-            expression[i] = FALSE
-        elif token not in TOKENS:
-            expression[i] = Var(token)
-
-    return build_tree(expression)
 
 class TruthTable:
     def __init__(self, *props):
