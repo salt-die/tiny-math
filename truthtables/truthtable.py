@@ -2,15 +2,16 @@ from expressions import *
 from functools import reduce
 from itertools import filterfalse, product
 
+
 OP_DICT = {'and': lambda p, q: And(p, q),
             'or': lambda p, q: Or(p, q),
             '->': lambda p, q: Implies(p, q),
            '<->': lambda p, q: Iff(p, q),
            'xor': lambda p, q: Xor(p, q)}
 
+TOKENS = set(OP_DICT).union('~()')
 TRUE = TRUE()
 FALSE = FALSE()
-TOKENS = set(OP_DICT).union('~()')
 
 
 def reformat(formula):
