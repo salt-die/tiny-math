@@ -18,6 +18,8 @@ class UnOp(Op):
         self.expr = expr
 
     def __repr__(self):
+        if isinstance(self.expr, BinOp):
+            return f'{self.op}({self.expr})'
         return f'{self.op}{self.expr}'
 
     def __call__(self, **var_values):
