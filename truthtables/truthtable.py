@@ -9,7 +9,7 @@ OP_DICT = {'and': lambda p, q: And(p, q),
            '<->': lambda p, q: Iff(p, q),
            'xor': lambda p, q: Xor(p, q)}
 
-TOKENS = set(OP_DICT).union('~()')
+TOKENS = set(OP_DICT).union('~()TF')
 TRUE = TRUE()
 FALSE = FALSE()
 
