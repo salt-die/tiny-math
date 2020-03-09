@@ -110,7 +110,7 @@ This works by incrementally removing a set if it exists else adding it:
 |                       |
 |                       |
 |A                      |
-|      |------------|   |
+|      +------------+   |
 |      |            |   |
 |  +------------------+ |
 |  |   |            | | |
