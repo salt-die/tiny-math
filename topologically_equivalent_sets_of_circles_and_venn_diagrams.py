@@ -60,7 +60,7 @@ def possibles(current=('(',), brackets_left=(')', '[', ']', '{', '}')):
         return
 
     for bracket in brackets_left:
-        if all(brack in current for brack in required[bracket]):
+        if required[bracket] in current:
             brackets = tuple(filter(bracket.__ne__, brackets_left))
             yield from possibles(current + (bracket,), brackets)
 
