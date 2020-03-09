@@ -1,6 +1,8 @@
-from expressions import *
 from functools import reduce
 from itertools import filterfalse, product
+
+from expressions import TRUE, FALSE, Var, Negate, And, Or, Implies, Iff, Xor
+
 
 
 OP_DICT = {'and': lambda p, q: And(p, q),

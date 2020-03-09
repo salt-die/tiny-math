@@ -108,6 +108,3 @@ class Iff(BinOp):
 class Xor(BinOp):
     def __init__(self, p, q):
         super().__init__('xor', lambda p, q:p != q, p, q)
-
-
-__all__ =  ("Var", "Const", "TRUE", "FALSE", "Negate", "And", "Or", "Implies", "Iff", "Xor")
