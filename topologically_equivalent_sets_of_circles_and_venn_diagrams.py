@@ -48,8 +48,23 @@ def all_words_length(n):
 We can also try to generate topologically equivalent sets of intersecting circles, but we reach some
 limitations of our 1-d representation and we also once again produce some redundant sets:
 
-In [161]: list(possibles())
-Out[161]: ['()[{]}', '()[{}]', '([){]}', '([){}]', '([{)]}', '([{)}]', '([{})]']
+In [168]: [*possibles()]
+Out[168]:
+['()[]{}',
+ '()[{]}',
+ '()[{}]',
+ '([)]{}',
+ '([){]}',
+ '([){}]',
+ '([]){}',
+ '([]{)}',
+ '([]{})',
+ '([{)]}',
+ '([{)}]',
+ '([{])}',
+ '([{]})',
+ '([{})]',
+ '([{}])']
 """
 
 required = {'[':'(', '{':'[', ')':'(', ']':'[', '}':'{'}
