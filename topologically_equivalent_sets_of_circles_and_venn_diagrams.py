@@ -80,10 +80,10 @@ def possibles(current=('(',), brackets_left=(')', '[', ']', '{', '}')):
             yield from possibles(current + (bracket,), brackets)
 
 """
-This is similar to 1-d Venn diagrams, but this method can produce intersections that aren't possible
-with just circles:
+Intersecting circles are similar to Venn diagrams, but venn diagrams can produce intersections that
+aren't possible with just circles:
 
-A simple implementaion of one-dimensional venn diagrams.
+A simple implementation of one-dimensional venn diagrams.
 
 Examples:
     In [220]: Venn('abcabc')
