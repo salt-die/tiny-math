@@ -8,7 +8,6 @@ Out[159]: {((())), (()()), (())(), ()(()), ()()()}
 
 Unfortunately (())() is really the same as ()(()) so we're not quite there.
 """
-
 class Word:
     def __init__(self, word1=None, word2=None, concat=True):
         if word1 is None:
@@ -43,6 +42,21 @@ def all_words_length(n):
         yield Word() + word
         yield word >> Word()
         yield Word() >> word
+"""
+We can improve using partitions though probably, a task for another day:
+def partitions(n, m=None):
+    if m is None or m >= n:
+        yield [n]
+        start = n - 1
+    else:
+        start = m
+
+    for m0 in range(start, 0, -1):
+        for subpartition in partitions(n - m0, m0):
+            yield [m0] + subpartition
+"""
+
+
 
 """
 We can also try to generate topologically equivalent sets of intersecting circles, but we reach some
