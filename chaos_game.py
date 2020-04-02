@@ -13,10 +13,11 @@ def make_base(n=3):
     return base
 
 
-def chaos_game(point=np.array([1, 1]), force_new_corner=False, niter=10000, base_points=3, ratio=.5):
+def chaos_game(*, force_new_corner=False, niter=10000, base_points=3, ratio=.5):
     previous = None
     xs, ys = [], []
     base = make_base(base_points)
+    point=np.array([1, 1]),
 
     for _ in range(niter):
         if force_new_corner:
