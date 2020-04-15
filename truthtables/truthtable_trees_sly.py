@@ -1,6 +1,51 @@
+"""
+Generate Truth Tables from boolean expressions.
+
+Example usage:
+In [101]: tt = TruthTable('p and (~q or (p and r))', 'p or (q and r)', '(p or q) and (p or r)')
+
+In [102]: tt.display()
+┌───┬───┬───┬─────────────────────────┬────────────────┬───────────────────────┐
+│ p │ q │ r │ p and (~q or (p and r)) │ p or (q and r) │ (p or q) and (p or r) │
+├───┼───┼───┼─────────────────────────┼────────────────┼───────────────────────┤
+│ F │ F │ F │            F            │       F        │           F           │
+│ F │ F │ T │            F            │       F        │           F           │
+│ F │ T │ F │            F            │       F        │           F           │
+│ F │ T │ T │            F            │       T        │           T           │
+│ T │ F │ F │            T            │       T        │           T           │
+│ T │ F │ T │            T            │       T        │           T           │
+│ T │ T │ F │            F            │       T        │           T           │
+│ T │ T │ T │            T            │       T        │           T           │
+└───┴───┴───┴─────────────────────────┴────────────────┴───────────────────────┘
+
+In [103]: tt2 = tt.pop(); tt3 = tt.pop()
+
+In [104]: tt2
+Out[104]: (p or q) and (p or r)
+
+In [105]: tt3
+Out[105]: p or (q and r)
+
+In [106]: tt2 == tt3
+Out[106]: True
+
+In [107]: tt + tt2
+Out[107]: p and (~q or (p and r)) | (p or q) and (p or r)
+
+In [108]: tt.exprs[0].r
+Out[108]: ~q or (p and r)
+
+In [109]: tt.exprs[0].r.r
+Out[109]: p and r
+
+In [110]: tt.exprs[0].r.r.l
+Out[110]: p
+
+Operator precedence is `~`, `()`, `and`, then left-to-right.
+"""
 from itertools import product
 from table_maker import table_maker
-from boolean_parser import LogicLexer, LogicParser
+from parser_lexer import LogicLexer, LogicParser
 
 LEXER = LogicLexer()
 PARSER = LogicParser()

@@ -46,9 +46,9 @@ Operator precedence is parens, negate, then left-to-right.
 from functools import reduce
 from itertools import filterfalse, product
 
+### This file needs to be moved for following imports to work
 from table_maker import table_maker
 from expressions import TRUE, FALSE, Var, Negate, And, Or, Implies, Iff, Xor
-
 
 
 OP_DICT = {'and': lambda p, q: And(p, q),
