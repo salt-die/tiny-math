@@ -9,45 +9,27 @@ class LogicLexer(Lexer):
     IFF = r'<->'; IMPLIES = r'->'; AND = r'and'; XOR = r'xor'; OR = r'or'; NAME = r'[a-z]'
 
     @_(r'T')
-    def TRUE(self, t):
-        t.value = _TRUE
-        return t
+    def TRUE(self, t): t.value = _TRUE; return t
 
     @_(r'F')
-    def FALSE(self, t):
-        t.value = _FALSE
-        return t
+    def FALSE(self, t): t.value = _FALSE; return t
 
     @_(r'[a-z]')
-    def NAME(self, t):
-        t.value = Var(t.value)
-        return t
+    def NAME(self, t): t.value = Var(t.value); return t
 
 
 class LogicParser(Parser):
     tokens = LogicLexer.tokens
     precedence = (('left', OR, XOR, IFF, IMPLIES), ('left', AND), ('left', '(', ')'), ('right', '~'))
+    lookup = {'or': Or, 'xor': Xor, '<->': Iff, '->': Implies, 'and': And}
 
-    def __init__(self):
-        self.vars = set()
+    def __init__(self): self.vars = set()
 
     @_('expr')
     def statement(self, p): return p.expr
 
-    @_('expr OR expr')
-    def expr(self, p): return Or(p.expr0, p.expr1)
-
-    @_('expr XOR expr')
-    def expr(self, p): return Xor(p.expr0, p.expr1)
-
-    @_('expr IFF expr')
-    def expr(self, p): return Iff(p.expr0, p.expr1)
-
-    @_('expr IMPLIES expr')
-    def expr(self, p): return Implies(p.expr0, p.expr1)
-
-    @_('expr AND expr')
-    def expr(self, p): return And(p.expr0, p.expr1)
+    @_('expr OR expr', 'expr XOR expr', 'expr IFF expr', 'expr IMPLIES expr', 'expr AND expr')
+    def expr(self, p): return self.lookup[p[1]](p.expr0, p.expr1)
 
     @_('"(" expr ")"')
     def expr(self, p): return p.expr
@@ -62,6 +44,4 @@ class LogicParser(Parser):
     def expr(self, p): return p.FALSE
 
     @_('NAME')
-    def expr(self, p):
-        self.vars.add(p.NAME.name)
-        return p.NAME
+    def expr(self, p): self.vars.add(p.NAME.name); return p.NAME
