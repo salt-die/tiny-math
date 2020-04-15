@@ -1,6 +1,3 @@
-"""Idea taken from "Coding Trees in Python": https://www.youtube.com/watch?v=7tCNu4CnjVc"""
-
-
 class Expr:
     pass
 
