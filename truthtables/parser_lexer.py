@@ -13,7 +13,7 @@ from expressions import (
 
 
 class LogicLexer(Lexer):
-    tokens = { NAME, IFF, IMPLIES, AND, XOR, OR, TRUE, FALSE }
+    tokens = { XOR, OR, IFF, IMPLIES, AND, TRUE, FALSE, NAME }
     ignore = ' '
     literals = { '~', '(', ')' }
 
