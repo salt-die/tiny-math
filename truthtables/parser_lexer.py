@@ -1,5 +1,5 @@
 from sly import Lexer, Parser
-from .expressions import (
+from expressions import (
     Xor,
     Or,
     Iff,

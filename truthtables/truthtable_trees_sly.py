@@ -44,8 +44,8 @@ Out[110]: p
 Operator precedence is `~`, `()`, `and`, then left-to-right.
 """
 from itertools import product
-from .table_maker import table_maker
-from .parser_lexer import LogicLexer, LogicParser
+from table_maker import table_maker
+from parser_lexer import LogicLexer, LogicParser
 
 LEXER = LogicLexer()
 PARSER = LogicParser()
