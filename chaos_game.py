@@ -1,5 +1,6 @@
 from random import choice
 import numpy as np
+import matplotlib.pyplot as plt
 
 PHI = (1 + 5**.5) / 2
 
@@ -17,7 +18,7 @@ def chaos_game(*, force_new_corner=False, niter=10000, base_points=3, ratio=.5):
     previous = None
     xs, ys = [], []
     base = make_base(base_points)
-    point=np.array([1, 1]),
+    point = np.array([1, 1])
 
     for _ in range(niter):
         if force_new_corner:
