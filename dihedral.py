@@ -53,7 +53,7 @@ class Ngon(tuple):
     def __mul__(self, other):
         new_vertices = deque(self)
         new_vertices.rotate(other)
-        return Ngon(new_vertices)
+        return type(self)(new_vertices)
 
     def __rmul__(self, other):
         return self.__mul__(other)
@@ -63,7 +63,7 @@ class Ngon(tuple):
         new_vertices.reverse()
         new_vertices.appendleft(new_vertices.pop())
 
-        return Ngon(new_vertices)
+        return type(self)(new_vertices)
 
 
 class NgonVis(Ngon):
