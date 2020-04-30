@@ -1,19 +1,40 @@
+"""Rotate and reflect polygons with `*` and `~`!"""
+
 from collections import deque
 import numpy as np
 
 τ = 2 * np.pi  # tau
 
-# Ascii art digits
-one =   ['   ', '  |', '  |']
-two =   [' _ ', ' _|', '|_ ']
-three = [' _ ', ' _|', ' _|']
-four =  ['   ', '|_|', '  |']
-five =  [' _ ', '|_ ', ' _|']
-six =   [' _ ', '|_ ', '|_|']
-seven = ['__ ', '  |', '  |']
-eight = [' _ ', '|_|', '|_|']
-nine =  [' _ ', '|_|', '  |']
-zero =  [' _ ', '| |', '|_|']
+one =   ['   ',
+         '  |',
+         '  |']
+two =   [' _ ',
+         ' _|',
+         '|_ ']
+three = [' _ ',
+         ' _|',
+         ' _|']
+four =  ['   ',
+         '|_|',
+         '  |']
+five =  [' _ ',
+         '|_ ',
+         ' _|']
+six =   [' _ ',
+         '|_ ',
+         '|_|']
+seven = ['__ ',
+         '  |',
+         '  |']
+eight = [' _ ',
+         '|_|',
+         '|_|']
+nine =  [' _ ',
+         '|_|',
+         '  |']
+zero =  [' _ ',
+         '| |',
+         '|_|']
 digits = one, two, three, four, five, six, seven, eight, nine, zero
 digits = (list(map(list, digit)) for digit in digits)
 translate = dict(zip('1234567890', digits))
@@ -27,9 +48,7 @@ class Ngon(tuple):
             return super().__new__(cls, n)
 
     def __repr__(self):
-        # if NgonPrinter is too much you can uncomment the following line:
-        # return f'<{super().__repr__()[1:-1]}>'
-        return NgonPrinter.show(self)
+        return f'<{super().__repr__()[1:-1]}>'
 
     def __mul__(self, other):
         new_vertices = deque(self)
@@ -45,6 +64,12 @@ class Ngon(tuple):
         new_vertices.appendleft(new_vertices.pop())
 
         return Ngon(new_vertices)
+
+
+class NgonVis(Ngon):
+    """Same as Ngon, but with ascii art polygons."""
+    def __repr__(self):
+        return NgonPrinter.show(self)
 
 
 class NgonPrinter:
