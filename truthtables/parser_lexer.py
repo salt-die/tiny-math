@@ -22,7 +22,6 @@ class LogicLexer(Lexer):
     IFF = r'<->'
     IMPLIES = r'->'
     AND = r'and'
-    NAME = r'[a-z]'
 
     @_(r'T')
     def TRUE(self, t):
