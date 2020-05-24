@@ -102,14 +102,15 @@ class NgonPrinter:
         # enough to the end of the segment.
         map_pos = np.array([y1, x1])  # flipped coordinates because numpy indexing
         while True:
+            grid[tuple(map_pos)] = value  # mark current location
+
             if np.linalg.norm(map_pos - (y2, x2)) <= 1:  # if distance to end of segment <= 1
                 break
-
-            grid[tuple(map_pos)] = value  # mark current location
 
             side = int(grid_dis[0] > grid_dis[1])  # which integer coordinate is closest to us?
             grid_dis[side] += delta[side]          # increment that coordinate by delta
             map_pos[side] += step[side]            # step to that coordinate
+
 
     @classmethod
     def show(cls, ngon):
