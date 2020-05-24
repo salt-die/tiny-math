@@ -42,10 +42,7 @@ translate = dict(zip('1234567890', digits))
 
 class Ngon(tuple):
     def __new__(cls, n):
-        if isinstance(n, int):
-            return super().__new__(cls, range(n))
-        else:
-            return super().__new__(cls, n)
+        return super().__new__(cls, range(n) if isinstance(n, int) else n)
 
     def __repr__(self):
         return f'<{super().__repr__()[1:-1]}>'
@@ -61,7 +58,7 @@ class Ngon(tuple):
     def __invert__(self):
         new_vertices = deque(self)
         new_vertices.reverse()
-        new_vertices.appendleft(new_vertices.pop())
+        new_vertices.rotate()
 
         return type(self)(new_vertices)
 
