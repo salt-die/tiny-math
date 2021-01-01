@@ -6,8 +6,6 @@ A place for tiny math projects!
 
 ![dragon curve image](dragon_curve.png)
 
-* game_of_life.py is Conway's Game of Life, but with scipy convolutions -- displays in terminal
-
 * game_of_life_averages.py is the game of life, but new cells are the average color of their parents
 
 ![game_of_life visualization](game_of_life_averages.png)
@@ -24,4 +22,6 @@ A place for tiny math projects!
 
 ![pendulum wave visualization](pendulum.gif)
 
-* truthtable.py generates truth tables from boolean expressions
+* aztec_gold.py is a visualization of the arctic circle theorem
+
+![arctic circle visualization](aztec_gold.gif)
