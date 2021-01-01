@@ -1,5 +1,5 @@
 """
-An visualization of the Arctic Circle Theorem, idea from:
+A visualization of the Arctic Circle Theorem, idea from:
    https://www.youtube.com/watch?v=Yy7Q8IWNfHM (The ARCTIC CIRCLE THEOREM or Why do physicists play dominoes?)
 """
 import numpy as np
