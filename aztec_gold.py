@@ -2,7 +2,6 @@
 An visualization of the Arctic Circle Theorem, idea from:
    https://www.youtube.com/watch?v=Yy7Q8IWNfHM (The ARCTIC CIRCLE THEOREM or Why do physicists play dominoes?)
 """
-
 import numpy as np
 import pygame
 
@@ -16,8 +15,8 @@ COLORS = np.array([
 ])
 
 def remove_collisions(tiles):
-    up_down = np.where(tiles[:-1] == S, tiles[1:] == N, False)
-    left_right = np.where(tiles[:, :-1] == E, tiles[:, 1:] == W, False)
+    up_down = (tiles[:-1] == S) & (tiles[1:] == N)
+    left_right = (tiles[:, :-1] == E) & (tiles[:, 1:] == W)
 
     tiles[:-1][up_down] = 0
     tiles[1:][up_down] = 0
@@ -26,7 +25,7 @@ def remove_collisions(tiles):
 
 def dance(tiles):
     d, _ = tiles.shape
-    new_tiles = np.zeros((d + 2, d + 2), dtype=int)
+    new_tiles = np.zeros((d + 2, d + 2), dtype=np.uint8)
 
     new_tiles[:-2, 1: -1][tiles == N] = N
     new_tiles[2: , 1: -1][tiles == S] = S
@@ -61,7 +60,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 800))
 
-    tiles = np.zeros((2, 2), dtype=int)
+    tiles = np.zeros((2, 2), dtype=np.uint8)
     fill(tiles)
     draw(screen, tiles)
 
@@ -75,7 +74,7 @@ def main():
                 fill(tiles)
                 draw(screen, tiles)
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                tiles = np.zeros((2, 2), dtype=int)
+                tiles = np.zeros((2, 2), dtype=np.uint8)
                 fill(tiles)
                 draw(screen, tiles)
 
