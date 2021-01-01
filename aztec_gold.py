@@ -39,9 +39,7 @@ def fill(tiles):
     offset = half - .5
 
     for y, x in np.argwhere(tiles == 0):
-        if half < abs(y - offset) + abs(x - offset):
-            continue
-        if tiles[y, x] == 0:
+        if abs(y - offset) + abs(x - offset) <= half and tiles[y, x] == 0:
             if round(np.random.random()):
                 tiles[y, x: x + 2] = N
                 tiles[y + 1, x: x + 2] = S
